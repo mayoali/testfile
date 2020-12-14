@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native';
+import React,{useState} from 'react';
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform,ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
@@ -7,8 +7,36 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 import logo from "../assets/images/loginLogo.png";
 import colors from '../config/colors';
+import Toast from 'react-native-simple-toast';
 
 function SignUp({ navigation }) {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [loading, setLoading] = useState(false);
+        
+    const Login=()=>{
+    console.log("Chalia kia?")
+        if(!email){
+            Toast.show('Please Enter Name', Toast.LONG);
+        }else if(!password){
+            Toast.show('Please Enter Email', Toast.LONG);
+        }
+        else if(!password){
+            Toast.show('Please Enter Password', Toast.LONG);
+        }
+        else if(!password){
+            Toast.show('Please Enter Phone Number', Toast.LONG);
+        }
+        else{
+            setLoading(true)
+            setTimeout(function(){ Toast.show('Register Successfully', Toast.LONG); navigation.navigate("HomeTabs")}, 2000);
+        
+          
+        } 
+        
+        }
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto" backgroundColor="#E8D5D4" />
@@ -29,19 +57,31 @@ function SignUp({ navigation }) {
                     <View style={{ marginTop: "13%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <View>
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Name</Text>
-                            <TextInput style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput
+                               value={name}
+                            onChange={(name)=>setName(name)}
+                            style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Email</Text>
-                            <TextInput style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput
+                               value={email}
+                            onChange={(email)=>setEmail(email)}
+                            style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Password</Text>
-                            <TextInput style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput
+                               value={password}
+                            onChange={(password)=>setPassword(password)}
+                            style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Phone Number</Text>
-                            <TextInput style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput
+                               value={phoneNumber}
+                            onChange={(phoneNumber)=>setPhoneNumber(phoneNumber)}
+                            style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "2%", flexDirection: 'row' }} >
                             <Text numberOfLines={1} style={{ marginLeft: RFPercentage(22), color: 'grey', fontFamily: 'sofiaprolight', fontSize: RFPercentage(1.7) }} >Already have an account?
@@ -53,8 +93,12 @@ function SignUp({ navigation }) {
                     </View>
 
                     <View>
-                        <TouchableOpacity onPress={() => navigation.navigate('HomeTabs')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: RFPercentage(5), marginBottom: RFPercentage(4) }} >
-                            <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2.1), color: 'white' }} >Sign Up</Text>
+                        <TouchableOpacity onPress={() =>Login()} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: RFPercentage(5), marginBottom: RFPercentage(4) }} >
+                           {loading?
+                           <View style={{padding:11}}>
+                               <ActivityIndicator color={"#fff"}/>
+                           </View>:
+                            <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2.1), color: 'white' }} >Sign Up</Text>}
                         </TouchableOpacity>
                     </View>
 

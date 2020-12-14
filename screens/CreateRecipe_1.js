@@ -6,7 +6,11 @@ import * as ImagePicker from 'expo-image-picker';
 
 import colors from '../config/colors';
 
-function CreateRecipe_1({ navigation }) {
+function CreateRecipe_1(props)  {
+
+    const [prepTime, setPrepTime] = useState("");
+    const [BakingTime, setBakingTime] = useState("");
+    const [RestingTime, setRestingTime] = useState("");
 
     const handleIngredients = async () => {
         let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -33,8 +37,10 @@ function CreateRecipe_1({ navigation }) {
         console.log(pickerResult);
 
     }
-
-
+    const {
+        route: { params },
+      } = props;
+console.log(params,"PARAMS=>>")
 
     return (
         <SafeAreaView style={styles.container}>
@@ -59,23 +65,46 @@ function CreateRecipe_1({ navigation }) {
                     {/* Add ingredients */}
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Ingredients</Text>
-                        <TouchableOpacity onPress={() => handleIngredients()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
+                        {/* <TouchableOpacity onPress={() => handleIngredients()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
                             <Text style={{ opacity: 1, padding: RFPercentage(2.1), fontFamily: 'ZermattFirst', fontSize: 23, color: colors.primary }}>Add Ingredients</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <View style={{borderWidth:0,borderBottomWidth:0.8,width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
+                            <View style={{flexDirection:"row", alignItems:"center"}}>
+                            <Text>Name:</Text>
+                            <TextInput placeholder={"Ingredint Name"}/>
+                            </View>
+                            <View style={{flexDirection:"row", alignItems:"center"}}>
+                            <Text>Qty:</Text>
+                            <TextInput placeholder={"Ingredint Qty"}/></View>
+                        </View>
+
+                        <View style={{borderWidth:0,borderBottomWidth:0.8,marginTop:15,width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
+                            <View style={{flexDirection:"row", alignItems:"center"}}>
+                            <Text>Name:</Text>
+                            <TextInput placeholder={"Ingredint Name"}/>
+                            </View>
+                            <View style={{flexDirection:"row", alignItems:"center"}}>
+                            <Text>Qty:</Text>
+                            <TextInput placeholder={"Ingredint Qty"}/></View>
+                        </View>
                     </View>
 
                     {/* Steps */}
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Steps</Text>
-                        <TouchableOpacity onPress={() => handleSteps()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
+                        {/* <TouchableOpacity onPress={() => handleSteps()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
                             <Text style={{ opacity: 1, padding: RFPercentage(2.1), fontFamily: 'ZermattFirst', fontSize: 23, color: colors.primary }}>Add Steps</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                                <View style={{borderWidth:0.8,borderRadius:8,borderColor:"#b4b4b4",height:120,marginTop:15,width:"100%"}}>
+                         
+                            <TextInput multiline={true} placeholder={"Ingredint Qty"}/>
+                        </View>
                     </View>
 
 
                     {/* Next Button */}
                     <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(8.5) }} >
-                        <TouchableOpacity onPress={() => navigation.navigate('CreateRecipe_2')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                        <TouchableOpacity onPress={() => props.navigation.navigate('CreateRecipe_2')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
                         </TouchableOpacity>
                     </View>

@@ -20,6 +20,11 @@ function CreateRecipe({ navigation }) {
     const [hardFront, setHardFront] = useState('white')
     const [hardBack, setHardBack] = useState(colors.secondary)
 
+    const [RecipeName, setRecipeName] = useState("");
+    const [PrepTime, setPrepTime] = useState("");
+    const [BakingTime, setBakingTime] = useState("");
+    const [RestingTime, setRestingTime] = useState("");
+
     const handleEasy = () => {
         setEasyFront('black')
         setEasyBack('white')
@@ -94,7 +99,10 @@ function CreateRecipe({ navigation }) {
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <View>
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Name your recipe</Text>
-                            <TextInput style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput
+                               value={RecipeName}
+                               onChange={(RecipeName)=>setRecipeName(RecipeName)}
+                            style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                     </View>
 
@@ -125,7 +133,10 @@ function CreateRecipe({ navigation }) {
                                 <Text style={{ fontSize: RFPercentage(1.7), maxWidth: "70%", minWidth: "70%", color: colors.primary, fontFamily: 'sofiaprolight' }} >How much time do you actively spend making the dish?</Text>
                             </View>
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
-                                <TextInput placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
+                                <TextInput
+                                  value={PrepTime}
+                               onChange={(PrepTime)=>setPrepTime(PrepTime)}
+                                placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: "5%" }} >
@@ -134,7 +145,10 @@ function CreateRecipe({ navigation }) {
                                 <Text style={{ fontSize: RFPercentage(1.7), maxWidth: "70%", minWidth: "70%", color: colors.primary, fontFamily: 'sofiaprolight' }} >How much time does the dish need to bake for?</Text>
                             </View>
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
-                                <TextInput placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
+                                <TextInput
+                                  value={BakingTime}
+                               onChange={(BakingTime)=>setBakingTime(BakingTime)}
+                                placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: "5%" }} >
@@ -143,14 +157,19 @@ function CreateRecipe({ navigation }) {
                                 <Text style={{ fontSize: RFPercentage(1.7), maxWidth: "70%", minWidth: "70%", color: colors.primary, fontFamily: 'sofiaprolight' }} >Does the dish need to rest any point? e.g maintaining, chilling  , rising time</Text>
                             </View>
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
-                                <TextInput placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
+                                <TextInput
+                                  value={RestingTime}
+                               onChange={(RestingTime)=>setRestingTime(RestingTime)}
+                                placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
                     </View>
 
                     {/* Next Button */}
                     <View style={{ width: '100%', left: "5%", marginBottom: RFPercentage(1.6) }} >
-                        <TouchableOpacity onPress={() => navigation.navigate('CreateRecipe_1')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                        <TouchableOpacity onPress={() => navigation.navigate('CreateRecipe_1',{
+       RecipeName:RecipeName,  PrepTime:PrepTime,BakingTime:BakingTime,RestingTime:RestingTime
+       })} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
                         </TouchableOpacity>
                     </View>

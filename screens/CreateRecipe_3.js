@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, } from 'react-native';
+import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator} from 'react-native';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import colors from '../config/colors';
+import Toast from 'react-native-simple-toast';
 
 function CreateRecipe_3({ navigation }) {
+    const [loading, setLoading] = useState(false);
+
+    const Login=()=>{
+        console.log("Chalia kia?")
+           
+                setLoading(true)
+                setTimeout(function(){ Toast.show('Recipe Post Successfully', Toast.LONG); navigation.navigate("AddIngrdient")}, 2700);
+            
+               
+            
+            }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -29,8 +42,13 @@ function CreateRecipe_3({ navigation }) {
 
                     {/* Next Button */}
                     <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(50) }} >
-                        <TouchableOpacity onPress={() => navigation.navigate('AddIngrdient')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
-                            <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Post your recipe</Text>
+                        <TouchableOpacity 
+                        onPress={() => Login()}
+                        // onPress={() => navigation.navigate('AddIngrdient')}
+                        
+                        style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                           {loading?<View style={{padding:11}}><ActivityIndicator color={"#fff"}/></View>:
+                            <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Post your recipe</Text>}
                         </TouchableOpacity>
                     </View>
 
