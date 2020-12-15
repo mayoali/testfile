@@ -37,10 +37,11 @@ function CreateRecipe_1(props)  {
         console.log(pickerResult);
 
     }
-    const {
-        route: { params },
-      } = props;
-console.log(params,"PARAMS=>>")
+    // const {
+    //     route: { params },
+    //   } = props;
+    const { itemId, otherParam } = props.route.params;
+console.log(props.route.params,"PARAMS=>>")
 
     return (
         <SafeAreaView style={styles.container}>

@@ -9,7 +9,7 @@ import colors from '../config/colors';
 
 const screenWidth = Dimensions.get('window').width;
 
-function CreateRecipe({ navigation }) {
+function CreateRecipe(props) {
 
     const [easyFront, setEasyFront] = useState('black')
     const [easyBack, setEasyBack] = useState('white')
@@ -167,7 +167,7 @@ function CreateRecipe({ navigation }) {
 
                     {/* Next Button */}
                     <View style={{ width: '100%', left: "5%", marginBottom: RFPercentage(1.6) }} >
-                        <TouchableOpacity onPress={() => navigation.navigate('CreateRecipe_1',{
+                        <TouchableOpacity onPress={() => props.navigation.navigate('CreateRecipe_1',{
        RecipeName:RecipeName,  PrepTime:PrepTime,BakingTime:BakingTime,RestingTime:RestingTime
        })} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
