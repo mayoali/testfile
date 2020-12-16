@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, } from 'react-native';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
@@ -11,6 +11,18 @@ function CreateRecipe_1(props)  {
     const [prepTime, setPrepTime] = useState("");
     const [BakingTime, setBakingTime] = useState("");
     const [RestingTime, setRestingTime] = useState("");
+    const [ingredientsArr, setIngredientsArr] = useState([{name:"",Qty:""}]);
+  
+    const AddInArrRequest=()=> {
+        ingredientsArr.push({
+            name:"",Qty:""
+        })
+       
+ 
+
+
+      }
+
 
     const handleIngredients = async () => {
         let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -42,7 +54,7 @@ function CreateRecipe_1(props)  {
     //   } = props;
     const { itemId, otherParam } = props.route.params;
 console.log(props.route.params,"PARAMS=>>")
-
+console.log(ingredientsArr,"ingredientsArr=>s")
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto" backgroundColor="white" />
@@ -69,16 +81,9 @@ console.log(props.route.params,"PARAMS=>>")
                         {/* <TouchableOpacity onPress={() => handleIngredients()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
                             <Text style={{ opacity: 1, padding: RFPercentage(2.1), fontFamily: 'ZermattFirst', fontSize: 23, color: colors.primary }}>Add Ingredients</Text>
                         </TouchableOpacity> */}
-                        <View style={{borderWidth:0,borderBottomWidth:0.8,width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-                            <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Text>Name:</Text>
-                            <TextInput placeholder={"Ingredint Name"}/>
-                            </View>
-                            <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Text>Qty:</Text>
-                            <TextInput placeholder={"Ingredint Qty"}/></View>
-                        </View>
-
+  {ingredientsArr.map((item, index) => {
+                return (
+               
                         <View style={{borderWidth:0,borderBottomWidth:0.8,marginTop:15,width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
                             <View style={{flexDirection:"row", alignItems:"center"}}>
                             <Text>Name:</Text>
@@ -87,9 +92,9 @@ console.log(props.route.params,"PARAMS=>>")
                             <View style={{flexDirection:"row", alignItems:"center"}}>
                             <Text>Qty:</Text>
                             <TextInput placeholder={"Ingredint Qty"}/></View>
-                        </View>
+                        </View>)})}
                     </View>
-
+<TouchableOpacity onPress={()=>AddInArrRequest()} style={{width:"50%",alignSelf:"center",height:35,justifyContent:"center",alignItems:"center",backgroundColor: colors.primary,marginTop:10}}><Text style={{fontSize:25, color:"#fff", fontWeight:"bold"}}>Add    +</Text></TouchableOpacity>
                     {/* Steps */}
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Steps</Text>
