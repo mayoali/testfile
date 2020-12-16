@@ -49,7 +49,7 @@ function SignUp({ navigation }) {
 
                     {/* welcome */}
                     <View style={{ marginTop: "45%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <Text style={{ fontSize: RFPercentage(4.2), color: colors.primary, fontFamily: 'ZermattFirst' }} >Welcome Sarah</Text>
+    <Text style={{ fontSize: RFPercentage(4.2), color: colors.primary, fontFamily: 'ZermattFirst' }} >Welcome Sarah</Text>
                         <Text style={{ maxWidth: 330, fontSize: RFPercentage(2.1), marginTop: 6, fontFamily: 'sofiaprolight' }} >Try out different dishes, create your own recipe and share them with others</Text>
                     </View>
 
@@ -72,15 +72,16 @@ function SignUp({ navigation }) {
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Password</Text>
                             <TextInput
-                               value={password}
-                            onChange={(password)=>setPassword(password)}
+                             onChangeText={setPassword}
+                             value={password}
+                         
                             style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Phone Number</Text>
                             <TextInput
                                value={phoneNumber}
-                            onChange={(phoneNumber)=>setPhoneNumber(phoneNumber)}
+                            onChange={setPhoneNumber}
                             style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "2%", flexDirection: 'row' }} >

@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState ,useEffect,Component} from 'react';
 import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, } from 'react-native';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
@@ -6,56 +6,67 @@ import * as ImagePicker from 'expo-image-picker';
 
 import colors from '../config/colors';
 
-function CreateRecipe_1(props)  {
+class CreateRecipe_1 extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        // isVisible: false,
+        // isVisibleBottom: true,
+        ingredientsArr: [{name:"",Qty:""}],
+     
+      };
+    }
+     handleIngredients = async () => {
+        let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
-    const [prepTime, setPrepTime] = useState("");
-    const [BakingTime, setBakingTime] = useState("");
-    const [RestingTime, setRestingTime] = useState("");
-    const [ingredientsArr, setIngredientsArr] = useState([{name:"",Qty:""}]);
-  
-    const AddInArrRequest=()=> {
-        ingredientsArr.push({
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        console.log(pickerResult);
+
+    }
+
+     handleSteps = async () => {
+        let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        console.log(pickerResult);
+
+    }
+    AddInArrRequest=()=> {
+        this.state.ingredientsArr.push({
             name:"",Qty:""
         })
-       
- 
-
-
+    this.setState({})
       }
 
+  render() {
+   
+    //   const { itemId, otherParam } = props.route.params;
+    const {
+        route: { params },
+      } = this.props;
+      console.log(params,"PARAMS__+==>>")
+// console.log(props.route.params,"PARAMS=>>")
+// console.log(ingredientsArr,"ingredientsArr=>s")
+    return (
 
-    const handleIngredients = async () => {
-        let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+    
 
-        if (permissionResult.granted === false) {
-            alert("Permission to access camera roll is required!");
-            return;
-        }
 
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
 
-    }
-
-    const handleSteps = async () => {
-        let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-
-        if (permissionResult.granted === false) {
-            alert("Permission to access camera roll is required!");
-            return;
-        }
-
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
-
-    }
     // const {
     //     route: { params },
     //   } = props;
-    const { itemId, otherParam } = props.route.params;
-console.log(props.route.params,"PARAMS=>>")
-console.log(ingredientsArr,"ingredientsArr=>s")
-    return (
+
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto" backgroundColor="white" />
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
@@ -81,20 +92,20 @@ console.log(ingredientsArr,"ingredientsArr=>s")
                         {/* <TouchableOpacity onPress={() => handleIngredients()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
                             <Text style={{ opacity: 1, padding: RFPercentage(2.1), fontFamily: 'ZermattFirst', fontSize: 23, color: colors.primary }}>Add Ingredients</Text>
                         </TouchableOpacity> */}
-  {ingredientsArr.map((item, index) => {
+  {this.state.ingredientsArr.map((item, index) => {
                 return (
                
                         <View style={{borderWidth:0,borderBottomWidth:0.8,marginTop:15,width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
                             <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Text>Name:</Text>
+                            <Text>Name: </Text>
                             <TextInput placeholder={"Ingredint Name"}/>
                             </View>
                             <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Text>Qty:</Text>
+                            <Text>Qty: </Text>
                             <TextInput placeholder={"Ingredint Qty"}/></View>
                         </View>)})}
                     </View>
-<TouchableOpacity onPress={()=>AddInArrRequest()} style={{width:"50%",alignSelf:"center",height:35,justifyContent:"center",alignItems:"center",backgroundColor: colors.primary,marginTop:10}}><Text style={{fontSize:25, color:"#fff", fontWeight:"bold"}}>Add    +</Text></TouchableOpacity>
+<TouchableOpacity onPress={()=>this.AddInArrRequest()} style={{width:"50%",alignSelf:"center",height:35,justifyContent:"center",alignItems:"center",backgroundColor: colors.primary,marginTop:10}}><Text style={{fontSize:25, color:"#fff", fontWeight:"bold"}}>Add    +</Text></TouchableOpacity>
                     {/* Steps */}
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Steps</Text>
@@ -110,7 +121,7 @@ console.log(ingredientsArr,"ingredientsArr=>s")
 
                     {/* Next Button */}
                     <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(8.5) }} >
-                        <TouchableOpacity onPress={() => props.navigation.navigate('CreateRecipe_2')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateRecipe_2')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
                         </TouchableOpacity>
                     </View>
@@ -118,7 +129,7 @@ console.log(ingredientsArr,"ingredientsArr=>s")
                 </View>
             </ScrollView>
         </SafeAreaView>
-    );
+    );}
 }
 
 const styles = StyleSheet.create({

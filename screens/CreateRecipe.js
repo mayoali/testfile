@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import Constants from 'expo-constants'
 import * as ImagePicker from 'expo-image-picker';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
@@ -72,9 +72,17 @@ function CreateRecipe(props) {
 
     }
 
+    const checkValue=()=>{
+        console.log(PrepTime,"++RESMAE<")
+    }
+
     // console.log(RFPercentage(3.3), screenWidth/15)
+    // console.log(RecipeName,"RecipeName=>")
     return (
         <SafeAreaView style={styles.container}>
+            <TouchableOpacity style={{height:40,width:40,backgroundColor:"red"}} onPress={()=>checkValue()}>
+                <Text>as</Text>
+            </TouchableOpacity>
             <StatusBar style="auto" backgroundColor="white" />
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
                 {/* header */}
@@ -100,8 +108,9 @@ function CreateRecipe(props) {
                         <View>
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Name your recipe</Text>
                             <TextInput
-                               value={RecipeName}
-                               onChange={(RecipeName)=>setRecipeName(RecipeName)}
+                           
+                           value={RecipeName}
+                            onChange={setRecipeName}
                             style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                     </View>
@@ -135,7 +144,7 @@ function CreateRecipe(props) {
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={PrepTime}
-                               onChange={(PrepTime)=>setPrepTime(PrepTime)}
+                               onChange={setPrepTime}
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
@@ -147,7 +156,7 @@ function CreateRecipe(props) {
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={BakingTime}
-                               onChange={(BakingTime)=>setBakingTime(BakingTime)}
+                               onChange={setBakingTime}
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
@@ -159,7 +168,7 @@ function CreateRecipe(props) {
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={RestingTime}
-                               onChange={(RestingTime)=>setRestingTime(RestingTime)}
+                               onChange={setRestingTime}
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
@@ -168,7 +177,7 @@ function CreateRecipe(props) {
                     {/* Next Button */}
                     <View style={{ width: '100%', left: "5%", marginBottom: RFPercentage(1.6) }} >
                         <TouchableOpacity onPress={() => props.navigation.navigate('CreateRecipe_1',{
-       RecipeName:RecipeName,  PrepTime:PrepTime,BakingTime:BakingTime,RestingTime:RestingTime
+       RecipeName:RecipeName,PrepTime:PrepTime,BakingTime:BakingTime,RestingTime:RestingTime
        })} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
                         </TouchableOpacity>
