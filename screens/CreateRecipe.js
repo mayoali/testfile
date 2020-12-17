@@ -72,17 +72,13 @@ function CreateRecipe(props) {
 
     }
 
-    const checkValue=()=>{
-        console.log(PrepTime,"++RESMAE<")
-    }
+ 
 
     // console.log(RFPercentage(3.3), screenWidth/15)
     // console.log(RecipeName,"RecipeName=>")
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={{height:40,width:40,backgroundColor:"red"}} onPress={()=>checkValue()}>
-                <Text>as</Text>
-            </TouchableOpacity>
+   
             <StatusBar style="auto" backgroundColor="white" />
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
                 {/* header */}
@@ -110,7 +106,7 @@ function CreateRecipe(props) {
                             <TextInput
                            
                            value={RecipeName}
-                            onChange={setRecipeName}
+                            onChangeText={setRecipeName}
                             style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                     </View>
@@ -144,7 +140,8 @@ function CreateRecipe(props) {
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={PrepTime}
-                               onChange={setPrepTime}
+                                  onChangeTextText={setPrepTime}
+                            
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
@@ -156,7 +153,7 @@ function CreateRecipe(props) {
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={BakingTime}
-                               onChange={setBakingTime}
+                               onChangeText={setBakingTime}
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>
@@ -168,7 +165,7 @@ function CreateRecipe(props) {
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={RestingTime}
-                               onChange={setRestingTime}
+                               onChangeText={setRestingTime}
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>

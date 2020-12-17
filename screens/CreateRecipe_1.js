@@ -13,9 +13,10 @@ class CreateRecipe_1 extends Component {
         // isVisible: false,
         // isVisibleBottom: true,
         ingredientsArr: [{name:"",Qty:""}],
-     
+        servingFor:""
       };
     }
+    
      handleIngredients = async () => {
         let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -82,7 +83,10 @@ class CreateRecipe_1 extends Component {
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <View>
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Serving For</Text>
-                            <TextInput style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput 
+                                value={this.state.servingFor}
+                                onChangeText={(servingFor)=>this.setState({servingFor})}
+                            style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                     </View>
 
@@ -98,7 +102,14 @@ class CreateRecipe_1 extends Component {
                         <View style={{borderWidth:0,borderBottomWidth:0.8,marginTop:15,width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
                             <View style={{flexDirection:"row", alignItems:"center"}}>
                             <Text>Name: </Text>
-                            <TextInput placeholder={"Ingredint Name"}/>
+                            <TextInput 
+                                     value={item.name}
+                                     onChangeText={name => {
+                                       let ingredientsArr = [...this.state.ingredientsArr];
+                                       ingredientsArr[index] = { ...ingredientsArr[index], name: name };
+                                       this.setState({ ingredientsArr });
+                                     }}
+                            placeholder={"Ingredint Name"}/>
                             </View>
                             <View style={{flexDirection:"row", alignItems:"center"}}>
                             <Text>Qty: </Text>
@@ -114,7 +125,13 @@ class CreateRecipe_1 extends Component {
                         </TouchableOpacity> */}
                                 <View style={{borderWidth:0.8,borderRadius:8,borderColor:"#b4b4b4",height:120,marginTop:15,width:"100%"}}>
                          
-                            <TextInput multiline={true} placeholder={"Ingredint Qty"}/>
+                            <TextInput        
+                            value={item.Qty}
+                                     onChangeText={Qty => {
+                                       let ingredientsArr = [...this.state.ingredientsArr];
+                                       ingredientsArr[index] = { ...ingredientsArr[index], Qty: Qty };
+                                       this.setState({ ingredientsArr });
+                                     }} multiline={true} placeholder={"Ingredint Qty"}/>
                         </View>
                     </View>
 
