@@ -1,4 +1,4 @@
-import React, { useState ,useEffect,Component} from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, } from 'react-native';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
@@ -8,15 +8,15 @@ import colors from '../config/colors';
 
 class CreateRecipe_1 extends Component {
     constructor(props) {
-      super(props);
-      this.state = {
-        // isVisible: false,
-        // isVisibleBottom: true,
-        ingredientsArr: [{name:"",Qty:""}],
-     
-      };
+        super(props);
+        this.state = {
+            // isVisible: false,
+            // isVisibleBottom: true,
+            ingredientsArr: [{ name: "", Qty: "" }],
+
+        };
     }
-     handleIngredients = async () => {
+    handleIngredients = async () => {
         let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
         if (permissionResult.granted === false) {
@@ -29,7 +29,7 @@ class CreateRecipe_1 extends Component {
 
     }
 
-     handleSteps = async () => {
+    handleSteps = async () => {
         let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
         if (permissionResult.granted === false) {
@@ -41,95 +41,97 @@ class CreateRecipe_1 extends Component {
         console.log(pickerResult);
 
     }
-    AddInArrRequest=()=> {
+    AddInArrRequest = () => {
         this.state.ingredientsArr.push({
-            name:"",Qty:""
+            name: "", Qty: ""
         })
-    this.setState({})
-      }
+        this.setState({})
+    }
 
-  render() {
-   
-    //   const { itemId, otherParam } = props.route.params;
-    const {
-        route: { params },
-      } = this.props;
-      console.log(params,"PARAMS__+==>>")
-// console.log(props.route.params,"PARAMS=>>")
-// console.log(ingredientsArr,"ingredientsArr=>s")
-    return (
+    render() {
 
-    
+        //   const { itemId, otherParam } = props.route.params;
+        const {
+            route: { params },
+        } = this.props;
+        console.log(params, "PARAMS__+==>>")
+        // console.log(props.route.params,"PARAMS=>>")
+        // console.log(ingredientsArr,"ingredientsArr=>s")
+        return (
 
 
 
-    // const {
-    //     route: { params },
-    //   } = props;
-
-        <SafeAreaView style={styles.container}>
-            <StatusBar style="auto" backgroundColor="white" />
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
-                {/* header */}
-                <View style={{ backgroundColor: colors.secondary, width: "100%" }}>
-                    <Text style={{ padding: 10, left: "2%", color: "white", maxWidth: "90%", fontFamily: "ZermattFirst", fontSize: RFPercentage(3) }} >Something’s Cooking Lets add a few more details</Text>
-                </View>
-
-                <View style={styles.recipeContainer}>
 
 
-                    {/* feild */}
-                    <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
-                        <View>
-                            <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Serving For</Text>
-                            <TextInput style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
-                        </View>
+            // const {
+            //     route: { params },
+            //   } = props;
+
+            <SafeAreaView style={styles.container}>
+                <StatusBar style="auto" backgroundColor="white" />
+                <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
+                    {/* header */}
+                    <View style={{ backgroundColor: colors.secondary, width: "100%" }}>
+                        <Text style={{ padding: 10, left: "2%", color: "white", maxWidth: "90%", fontFamily: "ZermattFirst", fontSize: RFPercentage(3) }} >Something’s Cooking Lets add a few more details</Text>
                     </View>
 
-                    {/* Add ingredients */}
-                    <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
-                        <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Ingredients</Text>
-                        {/* <TouchableOpacity onPress={() => handleIngredients()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
+                    <View style={styles.recipeContainer}>
+
+
+                        {/* feild */}
+                        <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
+                            <View>
+                                <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Serving For</Text>
+                                <TextInput style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            </View>
+                        </View>
+
+                        {/* Add ingredients */}
+                        <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
+                            <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Ingredients</Text>
+                            {/* <TouchableOpacity onPress={() => handleIngredients()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
                             <Text style={{ opacity: 1, padding: RFPercentage(2.1), fontFamily: 'ZermattFirst', fontSize: 23, color: colors.primary }}>Add Ingredients</Text>
                         </TouchableOpacity> */}
-  {this.state.ingredientsArr.map((item, index) => {
-                return (
-               
-                        <View style={{borderWidth:0,borderBottomWidth:0.8,marginTop:15,width:"100%",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
-                            <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Text>Name: </Text>
-                            <TextInput placeholder={"Ingredint Name"}/>
-                            </View>
-                            <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Text>Qty: </Text>
-                            <TextInput placeholder={"Ingredint Qty"}/></View>
-                        </View>)})}
-                    </View>
-<TouchableOpacity onPress={()=>this.AddInArrRequest()} style={{width:"50%",alignSelf:"center",height:35,justifyContent:"center",alignItems:"center",backgroundColor: colors.primary,marginTop:10}}><Text style={{fontSize:25, color:"#fff", fontWeight:"bold"}}>Add    +</Text></TouchableOpacity>
-                    {/* Steps */}
-                    <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
-                        <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Steps</Text>
-                        {/* <TouchableOpacity onPress={() => handleSteps()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
+                            {this.state.ingredientsArr.map((item, index) => {
+                                return (
+
+                                    <View style={{ borderWidth: 0, borderBottomWidth: 0.8, marginTop: 15, width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                            <Text>Name: </Text>
+                                            <TextInput placeholder={"Ingredint Name"} />
+                                        </View>
+                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                            <Text>Qty: </Text>
+                                            <TextInput placeholder={"Ingredint Qty"} /></View>
+                                    </View>)
+                            })}
+                        </View>
+                        <TouchableOpacity onPress={() => this.AddInArrRequest()} style={{ width: "50%", alignSelf: "center", height: 35, justifyContent: "center", alignItems: "center", backgroundColor: colors.primary, marginTop: 10 }}><Text style={{ fontSize: 25, color: "#fff", fontWeight: "bold" }}>Add    +</Text></TouchableOpacity>
+                        {/* Steps */}
+                        <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
+                            <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Steps</Text>
+                            {/* <TouchableOpacity onPress={() => handleSteps()} style={{ alignItems: 'center', borderColor: colors.tertiary, borderWidth: 2, borderStyle: 'dashed', borderRadius: 2, marginTop: 20, width: '100%', backgroundColor: 'rgba(249, 242, 222, 0.3)' }} >
                             <Text style={{ opacity: 1, padding: RFPercentage(2.1), fontFamily: 'ZermattFirst', fontSize: 23, color: colors.primary }}>Add Steps</Text>
                         </TouchableOpacity> */}
-                                <View style={{borderWidth:0.8,borderRadius:8,borderColor:"#b4b4b4",height:120,marginTop:15,width:"100%"}}>
-                         
-                            <TextInput multiline={true} placeholder={"Ingredint Qty"}/>
+                            <View style={{ borderWidth: 0.8, borderRadius: 8, borderColor: "#b4b4b4", height: 120, marginTop: 15, width: "100%" }}>
+
+                                <TextInput multiline={true} placeholder={"Ingredint Qty"} />
+                            </View>
                         </View>
+
+
+                        {/* Next Button */}
+                        <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(8.5) }} >
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateRecipe_2')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                                <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
-
-
-                    {/* Next Button */}
-                    <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(8.5) }} >
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateRecipe_2')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
-                            <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    );}
+                </ScrollView>
+            </SafeAreaView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({

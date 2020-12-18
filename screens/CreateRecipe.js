@@ -173,7 +173,7 @@ function CreateRecipe(props) {
                             </View>
                         </View>
                     </View>
-
+    <Text>R{RecipeName}</Text>
                     {/* Next Button */}
                     <View style={{ width: '100%', left: "5%", marginBottom: RFPercentage(1.6) }} >
                         <TouchableOpacity onPress={() => props.navigation.navigate('CreateRecipe_1',{
