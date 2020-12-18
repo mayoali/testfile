@@ -4,10 +4,11 @@ import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-
+import * as Google from 'expo-google-app-auth';
 import logo from "../assets/images/loginLogo.png";
 import colors from '../config/colors';
 import Toast from 'react-native-simple-toast';
+
 
 function SignUp({ navigation }) {
     const [name, setName] = useState("");
@@ -16,6 +17,31 @@ function SignUp({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [loading, setLoading] = useState(false);
         
+    // 885371830120-9d3pag394m35qspb5md9brn7k1vpp72c.apps.googleusercontent.com
+
+    async function signInWithGoogleAsync() {
+        try {
+          const result = await Google.logInAsync({
+            behavior: 'android',
+            // iosClientId: IOS_CLIENT_ID,
+            androidClientId: "885371830120-9d3pag394m35qspb5md9brn7k1vpp72c.apps.googleusercontent.com",
+            scopes: ['profile', 'email'],
+          });
+    
+          if (result.type === 'success') {
+            return result.accessToken;
+          } else {
+            return { cancelled: true };
+          }
+        } catch (e) {
+          return { error: true };
+        }
+      }
+      const signInWithGoogle = () => {
+        signInWithGoogleAsync()
+        }
+
+
     const Login=()=>{
     console.log("Chalia kia?")
         if(!email){
@@ -113,7 +139,7 @@ function SignUp({ navigation }) {
                                 <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(1.7), color: 'white' }} >Facebook</Text>
                             </TouchableOpacity>
                             {Platform.OS === 'android' ?
-                                <TouchableOpacity onPress={() => console.log('google')} style={{ marginLeft: RFPercentage(1.5), width: '45%', backgroundColor: '#4081ec', alignItems: 'center', marginTop: RFPercentage(2), marginBottom: RFPercentage(3) }} >
+                                <TouchableOpacity onPress={() => signInWithGoogle()} style={{ marginLeft: RFPercentage(1.5), width: '45%', backgroundColor: '#4081ec', alignItems: 'center', marginTop: RFPercentage(2), marginBottom: RFPercentage(3) }} >
                                     <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(1.7), color: 'white' }} >Google</Text>
                                 </TouchableOpacity> :
                                 <TouchableOpacity onPress={() => console.log('google')} style={{ justifyContent: 'center', flexDirection: 'row', borderColor: 'black', borderWidth: 1, marginLeft: RFPercentage(1.5), width: '45%', backgroundColor: 'white', alignItems: 'center', marginTop: RFPercentage(2), marginBottom: RFPercentage(3) }} >
