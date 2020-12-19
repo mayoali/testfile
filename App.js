@@ -151,7 +151,7 @@ export default function App() {
         <Stack.Navigator
           drawerStyle={{
             width: "0%"
-          }} initialRouteName="AddStep">
+          }} initialRouteName="SignUp">
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="HomeTabs" component={HomeTabs} />

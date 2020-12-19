@@ -8,7 +8,7 @@ import * as Google from 'expo-google-app-auth';
 import logo from "../assets/images/loginLogo.png";
 import colors from '../config/colors';
 import Toast from 'react-native-simple-toast';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function SignUp({ navigation }) {
     const [name, setName] = useState("");
