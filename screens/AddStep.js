@@ -4,9 +4,10 @@ import Constants from 'expo-constants'
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-
+// import RNFetchBlob from 'rn-fetch-blob'
 import uploadCloudIcon from "../assets/images/cloudUpload.png"
 import colors from '../config/colors';
+import Axios from 'axios';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -15,10 +16,60 @@ function AddStep({ navigation }) {
     const handleImage = async () => {
         const result = await DocumentPicker.getDocumentAsync({});
         console.log('result', result);
+        
+
+     
+  
+
+
         if (!result.cancelled) {
-            this.setState({
-                image: result,
-            });
+           console.log("CANCEL NO")
+    
+            console.log("YAHAN AYA?")
+        //     const sendVideoURL=result.uri
+        //     // setLoading(true)
+        //     // const asyncData = await AsyncStorage.getItem('userData');
+        //     // const domain = `${store.getState().globalReducer.domain}`
+        //     try{
+        //     const response = await Axios.post(
+        //         `http://192.168.0.110:5000/api/video/uploadvideo`,
+        //         {
+        //           ...sendVideoURL
+        //         },
+        //         {
+        //             headers: {
+        //                 "content-type": "multipart/form-data"
+            
+
+        //             },
+        //         },
+        //     );
+        //     // Toast.show('Login Successfully', Toast.LONG)
+        //     // navigation.navigate("HomeTabs")
+        //     console.log(response.data, "response=>>")
+        // } catch (err) {
+        // console.log(err,"ERROR_++>>")
+        // }
+   
+            const apiUrl = `http://192.168.0.110:5000/api/video/uploadvideo`;
+            const { name, uri } = result;
+            const uriParts = name.split('.');
+            const fileType = uriParts[uriParts.length - 1];const formData = new FormData();
+               formData.append('document', {
+                 uri,
+                 name,
+                 type: `application/${fileType}`,
+               });const options = {
+                 method: 'POST',
+                 body: formData,
+                 headers: {
+                   Accept: 'application/json',
+                   'Content-Type': 'multipart/form-data',
+                 },
+               };return fetch(apiUrl, options);
+          
+          
+
         }
 
     }

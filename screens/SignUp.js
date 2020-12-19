@@ -22,7 +22,7 @@ function SignUp({ navigation }) {
     async function signInWithGoogleAsync() {
         try {
           const result = await Google.logInAsync({
-            behavior: 'android',
+            behavior: 'web',
             // iosClientId: IOS_CLIENT_ID,
             androidClientId: "885371830120-9d3pag394m35qspb5md9brn7k1vpp72c.apps.googleusercontent.com",
             scopes: ['profile', 'email'],
