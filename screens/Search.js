@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, SafeAreaView, StyleSheet, View, ScrollView, Text, Dimensions, TouchableOpacity, FlatList, Image, TextInput } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, View, ScrollView, Text, Dimensions, TouchableOpacity, FlatList, Image, TextInput ,ActivityIndicator} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font'
 import Constants from 'expo-constants';
@@ -12,8 +12,8 @@ import dinner from "../assets/images/dinner.png"
 import drink from "../assets/images/drink.png"
 import lunch from "../assets/images/lunch.png"
 import quizk from "../assets/images/quizk.png"
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from "axios"
 import colors from '../config/colors';
 import IconBox from '../components/IconBox';
 
@@ -23,6 +23,36 @@ const screenWidth = Dimensions.get('window').width;
 function Search(props) {
     const [value, setValue] = React.useState('');
     const [valueStatus, setValueStauts] = React.useState('');
+    const [shopingData1, setShopingData] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+   const getRecipeAPICall = async () => {
+        console.log('API Start');
+    
+        setLoading(true)
+
+        try {
+            const UserData = await AsyncStorage.getItem('signInData');
+            const userLoginData =JSON.parse(UserData);
+          // const asyncData = await AsyncStorage.getItem('userData');
+          const response = await Axios.get(`http://192.168.0.110:5000/api/recipe?searchname=${value}`,
+            {
+              headers: {
+                "content-type": "application/json",
+                Authorization: userLoginData.token
+              },
+            },
+          );
+          // console.log('Leave Route API working', response.data);
+          setLoading(false)
+    
+          setShopingData(response.data)
+        } catch (err) {
+          console.log('nor working Shoping list ', err);
+          setLoading(false)
+        }
+      };
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -45,12 +75,13 @@ function Search(props) {
                                 placeholder={'Type here to find some recipe'}
                                 placeholderTextColor="#D8D8D8" />
                         </View>
-                        <TouchableOpacity style={{ width: 40, height: 40, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' }} >
+                        <TouchableOpacity onPress={()=>getRecipeAPICall()} style={{ width: 40, height: 40, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' }} >
                             <MaterialCommunityIcons style={{ opacity: 0.9 }} size={30} color="white" name="magnify" />
                         </TouchableOpacity>
                     </View>
 
                     {/* what do you want to eat 1*/}
+{loading?<ActivityIndicator color={"orange"} size={"large"}/>:null}
                     <View>
                         <Text style={{ fontFamily: 'ZermattFirst', fontSize: RFPercentage(3.5), marginTop: 30 }} >What do you want to eat?</Text>
                     </View>
@@ -67,7 +98,7 @@ function Search(props) {
                         </View>
                     </View>
 
-                    {/* what do you want to eat 2*/}
+                  
                     <View>
                         <Text style={{ fontFamily: 'ZermattFirst', fontSize: RFPercentage(3.5), marginTop: 30 }} >What do you want to eat?</Text>
                     </View>
@@ -93,7 +124,7 @@ function Search(props) {
                         </View>
                     </View>
 
-                    {/* Select your cooking level*/}
+                 
                     <View>
                         <Text style={{ fontFamily: 'ZermattFirst', fontSize: RFPercentage(3.5), marginTop: 30 }} >Select your cooking level</Text>
                     </View>
@@ -124,7 +155,7 @@ function Search(props) {
                         </View>
                     </View>
 
-                    {/* Select your health goal*/}
+               
                     <View>
                         <Text style={{ fontFamily: 'ZermattFirst', fontSize: RFPercentage(3.5), marginTop: 30 }} >Select your health goal</Text>
                     </View>

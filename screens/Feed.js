@@ -7,7 +7,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import colors from '../config/colors';
 import img from '../assets/images/Rectangle2991.png'
-import img2 from '../assets/images/Rectangle99.png'
+import img2 from '../assets/images/WwmbDR.jpg'
 import feedImg1 from "../assets/images/Rectangle8.png"
 import feedImg2 from "../assets/images/Rectangle9.png"
 import feedImg3 from "../assets/images/Rectangle18.png"
@@ -103,67 +103,67 @@ const toturailsData = [
     {
         id: 1,
         picture: img2,
-        time: '10 mins',
+        time: '  00:27 secs',
         serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
+        // hashTags: '#fries, #eggs',
+        heading: 'Biryani',
     },
-    {
-        id: 2,
-        picture: img2,
-        time: '10 mins',
-        serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
-    },
-    {
-        id: 3,
-        picture: img2,
-        time: '10 mins',
-        serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
-    },
-    {
-        id: 4,
-        picture: img2,
-        time: '10 mins',
-        serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
-    },
-    {
-        id: 5,
-        picture: img2,
-        time: '10 mins',
-        serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
-    },
-    {
-        id: 6,
-        picture: img2,
-        time: '10 mins',
-        serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
-    },
-    {
-        id: 7,
-        picture: img2,
-        time: '10 mins',
-        serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
-    },
-    {
-        id: 8,
-        picture: img2,
-        time: '10 mins',
-        serve: '1 serve',
-        hashTags: '#fries, #eggs',
-        heading: 'Make yummilicious breakfast for yourself',
-    },
+    // {
+    //     id: 2,
+    //     picture: img2,
+    //     time: '10 mins',
+    //     serve: '1 serve',
+    //     hashTags: '#fries, #eggs',
+    //     heading: 'Make yummilicious breakfast for yourself',
+    // },
+    // {
+    //     id: 3,
+    //     picture: img2,
+    //     time: '10 mins',
+    //     serve: '1 serve',
+    //     hashTags: '#fries, #eggs',
+    //     heading: 'Make yummilicious breakfast for yourself',
+    // },
+    // {
+    //     id: 4,
+    //     picture: img2,
+    //     time: '10 mins',
+    //     serve: '1 serve',
+    //     hashTags: '#fries, #eggs',
+    //     heading: 'Make yummilicious breakfast for yourself',
+    // },
+    // {
+    //     id: 5,
+    //     picture: img2,
+    //     time: '10 mins',
+    //     serve: '1 serve',
+    //     hashTags: '#fries, #eggs',
+    //     heading: 'Make yummilicious breakfast for yourself',
+    // },
+    // {
+    //     id: 6,
+    //     picture: img2,
+    //     time: '10 mins',
+    //     serve: '1 serve',
+    //     hashTags: '#fries, #eggs',
+    //     heading: 'Make yummilicious breakfast for yourself',
+    // },
+    // {
+    //     id: 7,
+    //     picture: img2,
+    //     time: '10 mins',
+    //     serve: '1 serve',
+    //     hashTags: '#fries, #eggs',
+    //     heading: 'Make yummilicious breakfast for yourself',
+    // },
+    // {
+    //     id: 8,
+    //     picture: img2,
+    //     time: '10 mins',
+    //     serve: '1 serve',
+    //     hashTags: '#fries, #eggs',
+    //     heading: 'Make yummilicious breakfast for yourself',
+    // },
 ]
 
 const favRecipeData = [
@@ -367,7 +367,7 @@ function Feed({ navigation }) {
                     <FlatList
                         data={toturailsData}
                         keyExtractor={item => item.id.toString()}     //has to be unique   
-                        renderItem={({ item, index }) => <ListCard screenWidth={screenWidth} picture={item.picture} heading={item.heading} hashTags={item.hashTags} time={item.time} serve={item.serve} />} //method to render the data in the way you want using styling u need
+                        renderItem={({ item, index }) => <ListCard navigation={navigation} screenWidth={screenWidth} picture={item.picture} heading={item.heading} hashTags={item.hashTags} time={item.time} serve={item.serve} />} //method to render the data in the way you want using styling u need
                         horizontal={false}
                         numColumns={1}
                     />

@@ -24,6 +24,10 @@ import Payment from './screens/Payment';
 import MorePlans from './screens/MorePlans';
 import Settings from './screens/Settings';
 import SignUp from './screens/SignUp';
+import VideoPlay from './components/VideoPlay';
+
+
+// import Detail from './screens/Detail';
 
 import colors from './config/colors';
 
@@ -164,6 +168,9 @@ export default function App() {
           <Stack.Screen name="Payment" component={Payment} />
           <Stack.Screen name="MorePlans" component={MorePlans} />
           <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="VideoPlay" component={VideoPlay} />
+          
+          {/* <Stack.Screen name="Detail" component={Detail} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </>

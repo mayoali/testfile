@@ -2,21 +2,93 @@ import React, { useState } from 'react';
 import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator} from 'react-native';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-
+import Axios from "axios"
 import colors from '../config/colors';
 import Toast from 'react-native-simple-toast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function CreateRecipe_3({ navigation }) {
+function CreateRecipe_3(props) {
     const [loading, setLoading] = useState(false);
-
+    const [chefNote, setChefNote] = useState("");
+    const {
+        route: { params },
+    } = props;
+    // console.log(params,"PARAMS333Final==>>")
     const Login=()=>{
-        console.log("Chalia kia?")
+
            
                 setLoading(true)
-                setTimeout(function(){ Toast.show('Recipe Post Successfully', Toast.LONG); navigation.navigate("AddIngrdient")}, 2700);
+                setTimeout(function(){ Toast.show('Recipe Post Successfully', Toast.LONG); props.navigation.navigate("AddIngrdient")}, 2700);
             
                
             
+            }
+
+            const Submit = async () => {
+                  
+       
+                    setLoading(true)
+                    try {
+                      
+                        const UserData = await AsyncStorage.getItem('signInData');
+                        const userLoginData =JSON.parse(UserData);
+                
+                        // console.log(userLoginData._id,"userLoginData._id",userLoginData.token)
+                        // const asyncData = await AsyncStorage.getItem('userData'); 
+                        // const domain = `${store.getState().globalReducer.domain}`
+                        const response = await Axios.post(`http://192.168.0.110:5000/api/recipe/insertrecipe`,
+                            {
+                                "userId":userLoginData._id,
+                                "name" :params.submitData1.params.RecipeName,
+                                "ingredients":params.submitData1.ingredientsArr,
+                                "steps":[{description:params.submitData1.steps}
+                                // {"description":chefNote}
+                            ],
+                                "prepareTime":parseInt(params.submitData1.params.PrepTime),
+                                "bakingTime":parseInt(params.submitData1.params.BakingTime),
+                                "restingTime":parseInt(params.submitData1.params.RestingTime),
+                                "fkDistypeId":"5fd5f8d979fa06222098cdb9",
+                                // "fkDistypeId":params.DishTypesID,
+                                "fkCusineTypeId":"5fd5f8d979fa06222098cdb9",
+                                // "fkCusineTypeId":params.CusineTypeID,
+                                "difficulty":params.submitData1.params.Difficulty,
+                                // "dishImage":"baseparams64"
+                                "dishImage":params.submitData1.params.Base64
+                            // "userId":"5fd5f8d979fa06222098cdb9",
+                            // "name" :"Qofty",
+                            // "ingredients":[{"name":"Yogurts","Qty":"half Cup"},
+                            // {"name":"Salt","Qty":"2 table spoon"}],
+                            // "steps":[{"description":"Mix it well"},
+                            // {"description":"freez it"}],
+                            // "prepareTime":10,
+                            // "bakingTime":0,
+                            // "restingTime":0,
+                            // "fkDistypeId":"5fd5f8d979fa06222098cdb9",
+                            // "fkCusineTypeId":"5fd5f8d979fa06222098cdb9",
+                            // "difficulty":"Medium",
+                            // "dishImage":"base64"
+                            },
+                            {
+                                headers: {
+                                    "content-type": "application/json",
+                                    Authorization: userLoginData.token
+                                },
+                            },
+                        );
+                        Toast.show('Recipe Add Successfully', Toast.LONG)
+                       props.navigation.navigate("AddStep",{
+                        // props.navigation.navigate("AddIngrdient",{
+                           ResData:response.data
+                       })
+                        console.log(response.data, "response=>>")
+                        setLoading(false)
+                    } catch (err) {
+                        console.log(err,"ERR)R=>")
+                        setLoading(false)
+
+                }
+                
+        
             }
 
 
@@ -36,14 +108,17 @@ function CreateRecipe_3({ navigation }) {
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <View>
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Chef’s Note</Text>
-                            <TextInput style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput 
+                            value={chefNote}
+                            onChangeText={setChefNote}
+                            style={{ marginTop: 5, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                     </View>
 
                     {/* Next Button */}
                     <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(50) }} >
                         <TouchableOpacity 
-                        onPress={() => Login()}
+                        onPress={() => Submit()}
                         // onPress={() => navigation.navigate('AddIngrdient')}
                         
                         style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >

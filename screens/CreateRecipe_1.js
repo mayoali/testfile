@@ -3,6 +3,7 @@ import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, Tex
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import colors from '../config/colors';
 
@@ -27,7 +28,7 @@ class CreateRecipe_1 extends Component {
         }
 
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
+        // console.log(pickerResult);
 
     }
 
@@ -40,7 +41,7 @@ class CreateRecipe_1 extends Component {
         }
 
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
+        // console.log(pickerResult);
 
     }
     AddInArrRequest = () => {
@@ -50,13 +51,27 @@ class CreateRecipe_1 extends Component {
         this.setState({})
     }
 
+
+
+    nextBtn(){
+        const {
+            route: { params },
+        } = this.props;
+        this.props.navigation.navigate('CreateRecipe_2',{
+            params,ingredientsArr:this.state.ingredientsArr,servingFor:this.state.servingFor,steps:this.state.steps
+
+        })
+    }
+
+
+
     render() {
 
         //   const { itemId, otherParam } = props.route.params;
         const {
             route: { params },
         } = this.props;
-        console.log(params, "PARAMS__+==>>")
+        // console.log(params, "PARAMS__+==>>")
         // console.log(props.route.params,"PARAMS=>>")
         // console.log(ingredientsArr,"ingredientsArr=>s")
         return (
@@ -137,14 +152,14 @@ class CreateRecipe_1 extends Component {
                          
                             <TextInput        
                             value={this.state.steps}
-                            onChange={(steps) => setEmail(steps)}
+                            onChangeText={(steps) => this.setState({steps})}
                             multiline={true} placeholder={"Ingredint Qty"}/>
                         </View>
 
 
                         {/* Next Button */}
                         <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(8.5) }} >
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateRecipe_2')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                            <TouchableOpacity onPress={() => this.nextBtn()} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                                 <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
                             </TouchableOpacity>
                         </View></View>

@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import Constants from 'expo-constants'
 import * as ImagePicker from 'expo-image-picker';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import uploadCloudIcon from "../assets/images/cloudUpload.png"
 import colors from '../config/colors';
+import Toast from 'react-native-simple-toast';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -24,11 +26,13 @@ function CreateRecipe(props) {
     const [PrepTime, setPrepTime] = useState("");
     const [BakingTime, setBakingTime] = useState("");
     const [RestingTime, setRestingTime] = useState("");
+    const [Difficulty, setDifficulty] = useState("Easy");
+    const [Base64, setBase64] = useState("");
 
     const handleEasy = () => {
         setEasyFront('black')
         setEasyBack('white')
-
+        setDifficulty("Easy")
         setMediumFront('white')
         setMediumBack(colors.secondary)
 
@@ -39,6 +43,7 @@ function CreateRecipe(props) {
     const handleMedium = () => {
         setEasyFront('white')
         setEasyBack(colors.secondary)
+        setDifficulty("Medium")
 
         setMediumFront('black')
         setMediumBack('white')
@@ -50,6 +55,7 @@ function CreateRecipe(props) {
     const handleHard = () => {
         setEasyFront('white')
         setEasyBack(colors.secondary)
+        setDifficulty("Hard")
 
         setMediumFront('white')
         setMediumBack(colors.secondary)
@@ -57,6 +63,18 @@ function CreateRecipe(props) {
         setHardFront('black')
         setHardBack('white')
     }
+
+    useEffect(() => {
+      getValue
+     
+    }, [])
+
+    async function getValue(){
+        const UserData = await AsyncStorage.getItem('signInData');
+        const UserDataAdmin =JSON.parse(UserData);
+        // console.log(UserData,"USER DATA+==> ha?")
+      }
+
 
 
     const handleImage = async () => {
@@ -67,13 +85,41 @@ function CreateRecipe(props) {
             return;
         }
 
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
+        let pickerResult = await ImagePicker.launchImageLibraryAsync({
+            quality: 0.8,
+            base64: true      
+        });
+        setBase64(pickerResult.base64)
+        // console.log(pickerResult.base64);
 
     }
 
  
+const nextBtn=()=>{
 
+    if(!Base64){
+        Toast.show('Please Select Photo', Toast.LONG);
+    }else if(!RecipeName){
+        Toast.show('Please Enter RecipeName', Toast.LONG);
+    }
+    else if(!PrepTime){
+        Toast.show('Please Enter Prep Time', Toast.LONG);
+    }
+    else if(!BakingTime){
+        Toast.show('Please Enter Baking Time', Toast.LONG);
+    }
+    else if(!RestingTime){
+        Toast.show('Please Enter Resting Time', Toast.LONG);
+    }
+    else{
+
+
+
+    props.navigation.navigate('CreateRecipe_1',{
+        RecipeName:RecipeName,PrepTime:PrepTime,BakingTime:BakingTime,RestingTime:RestingTime,Base64:Base64,Difficulty:Difficulty
+        }
+        )}
+}
     // console.log(RFPercentage(3.3), screenWidth/15)
     // console.log(RecipeName,"RecipeName=>")
     return (
@@ -140,7 +186,7 @@ function CreateRecipe(props) {
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={PrepTime}
-                                  onChangeTextText={setPrepTime}
+                                  onChangeText={setPrepTime}
                             
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
@@ -170,12 +216,9 @@ function CreateRecipe(props) {
                             </View>
                         </View>
                     </View>
-    <Text>R{RecipeName}</Text>
                     {/* Next Button */}
                     <View style={{ width: '100%', left: "5%", marginBottom: RFPercentage(1.6) }} >
-                        <TouchableOpacity onPress={() => props.navigation.navigate('CreateRecipe_1',{
-       RecipeName:RecipeName,PrepTime:PrepTime,BakingTime:BakingTime,RestingTime:RestingTime
-       })} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                        <TouchableOpacity onPress={() => nextBtn()} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Next</Text>
                         </TouchableOpacity>
                     </View>

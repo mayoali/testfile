@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import logo from "../assets/images/loginLogo.png";
 import colors from '../config/colors';
@@ -25,13 +26,17 @@ function Login({ navigation }) {
         else {
             try {
                 setLoading(true)
+                const sendObj = {
+                    "email": "faizan@gmail.com",
+                    "password": password
+                }
+                console.log("SEMFOBJ",sendObj)
                 // const asyncData = await AsyncStorage.getItem('userData');
                 // const domain = `${store.getState().globalReducer.domain}`
                 const response = await Axios.post(
                     `http://192.168.0.110:5000/api/users/login`,
                     {
-                        "email": "faizan@gmail.com124526",
-                        "password": "12as3asdf"
+                       ...sendObj
                     },
                     {
                         headers: {
@@ -40,10 +45,18 @@ function Login({ navigation }) {
                         },
                     },
                 );
+                AsyncStorage.setItem('signInData', JSON.stringify(response.data));
+
                 Toast.show('Login Successfully', Toast.LONG)
                 navigation.navigate("HomeTabs")
+                setLoading(false)
+
                 console.log(response.data, "response=>>")
             } catch (err) {
+                Toast.show('Email or Password is wrong', Toast.LONG)
+                setLoading(false)
+                console.log(err,"ERROR->")
+
             }
         }
 
@@ -71,14 +84,14 @@ function Login({ navigation }) {
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Email</Text>
                             <TextInput
                                 value={email}
-                                onChange={(email) => setEmail(email)}
+                                onChangeText={setEmail}
                                 style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Password</Text>
                             <TextInput
                                 value={password}
-                                onChange={(password) => setPassword(password)}
+                                onChangeText={setPassword}
                                 style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <TouchableOpacity style={{ marginTop: "2%" }} >

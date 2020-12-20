@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, } from 'react-native';
+import { Dimensions, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator} from 'react-native';
 import Constants from 'expo-constants'
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
@@ -8,10 +8,20 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import uploadCloudIcon from "../assets/images/cloudUpload.png"
 import colors from '../config/colors';
 import Axios from 'axios';
+import Toast from 'react-native-simple-toast';
 
 const screenWidth = Dimensions.get('window').width;
 
-function AddStep({ navigation }) {
+function AddStep(props) {
+
+    const [result, setResult] = useState("");
+    const [loading, setLoading] = useState(false);
+
+
+    const {
+        route: { params },
+    } = props;
+    // console.log(params,"Params=>")
 
     const handleImage = async () => {
         const result = await DocumentPicker.getDocumentAsync({});
@@ -23,52 +33,14 @@ function AddStep({ navigation }) {
 
 
         if (!result.cancelled) {
-           console.log("CANCEL NO")
-    
-            console.log("YAHAN AYA?")
-        //     const sendVideoURL=result.uri
-        //     // setLoading(true)
-        //     // const asyncData = await AsyncStorage.getItem('userData');
-        //     // const domain = `${store.getState().globalReducer.domain}`
-        //     try{
-        //     const response = await Axios.post(
-        //         `http://192.168.0.110:5000/api/video/uploadvideo`,
-        //         {
-        //           ...sendVideoURL
-        //         },
-        //         {
-        //             headers: {
-        //                 "content-type": "multipart/form-data"
-            
 
-        //             },
-        //         },
-        //     );
-        //     // Toast.show('Login Successfully', Toast.LONG)
-        //     // navigation.navigate("HomeTabs")
-        //     console.log(response.data, "response=>>")
-        // } catch (err) {
-        // console.log(err,"ERROR_++>>")
-        // }
    
-            const apiUrl = `http://192.168.0.110:5000/api/video/uploadvideo`;
-            const { name, uri } = result;
-            const uriParts = name.split('.');
-            const fileType = uriParts[uriParts.length - 1];const formData = new FormData();
-               formData.append('document', {
-                 uri,
-                 name,
-                 type: `application/${fileType}`,
-               });const options = {
-                 method: 'POST',
-                 body: formData,
-                 headers: {
-                   Accept: 'application/json',
-                   'Content-Type': 'multipart/form-data',
-                 },
-               };return fetch(apiUrl, options);
-          
-          
+
+        Toast.show('Photo or Video Selected', Toast.LONG);
+setResult(result)
+
+        
+         
 
         }
 
@@ -93,7 +65,45 @@ function AddStep({ navigation }) {
         }
 
     }
+    const saveBtn = () => {
+        setLoading(true)
+            setTimeout(function(){ Toast.show('Video Add Successfully', Toast.LONG); props.navigation.navigate("Payment")}, 5000);
 
+        // const apiUrl = `http://192.168.0.110:5000/api/video/uploadvideo`;
+        // const { name, uri } = result;
+        // const uriParts = name.split('.');
+        // const fileType = uriParts[uriParts.length - 1];
+        // const formData = new FormData();
+        //    formData.append('document', {
+        //      uri,
+        //      name,
+        //      type: `application/${fileType}`,
+        //      fkRecipeId:params.recipeId
+        //    });
+
+        //    const options = {
+        //      method: 'POST',
+        //      body: formData,
+        //      headers: {
+        //        Accept: 'application/json',
+        //        'Content-Type': 'multipart/form-data',
+        //     //    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmRmMGQ4NzQwNjk2YzM0M2YzMDQyOTAiLCJ1c2VybmFtZSI6InNhbXBsZWFzZGYiLCJpc1N1YmNyaWJlIjpmYWxzZSwiZW1haWwiOiJmYWl6YW5AZ21haWwuY29tIiwiaWF0IjoxNjA4NDc1MjM2LCJleHAiOjE2MDg0Nzg4MzZ9.ZD3E4ca35PKK670j_kef-K5MBcOqZldIzacC4CLMAxw"
+
+        //      },
+        //    };
+
+        //    return fetch(apiUrl, options).then(resp => resp.json()).then(data=> {
+        //     //    console.log(data,"DATA") 
+        //    Toast.show(data, Toast.LONG);
+        //    props.navigation.navigate('Payment')
+        //    setLoading(false)
+        // })
+       
+
+    }
+
+
+    
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto" backgroundColor="white" />
@@ -143,8 +153,8 @@ function AddStep({ navigation }) {
 
                     {/* Next Button */}
                     <View style={{ width: '100%', left: "5%", marginBottom: 20 }} >
-                        <TouchableOpacity onPress={() => navigation.navigate('Payment')} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
-                            <Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Save</Text>
+                        <TouchableOpacity onPress={() =>saveBtn()} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
+                            {loading?<ActivityIndicator color={"#fff"}/>:<Text style={{ fontFamily: 'AvianoFlareRegular', padding: 11, fontSize: RFPercentage(2), color: 'white' }} >Save</Text>}
                         </TouchableOpacity>
                     </View>
 

@@ -42,22 +42,49 @@ function SignUp({ navigation }) {
         }
 
 
-    const Login=()=>{
-    console.log("Chalia kia?")
-        if(!email){
+   async function Login(){
+    console.log("Chalia kia?", name,"Email", email,"Pas",password,"ph",phoneNumber)
+        if(!name){
             Toast.show('Please Enter Name', Toast.LONG);
-        }else if(!password){
+        }else if(!email){
             Toast.show('Please Enter Email', Toast.LONG);
         }
         else if(!password){
             Toast.show('Please Enter Password', Toast.LONG);
         }
-        else if(!password){
+        else if(!phoneNumber){
             Toast.show('Please Enter Phone Number', Toast.LONG);
         }
         else{
-            setLoading(true)
-            setTimeout(function(){ Toast.show('Register Successfully', Toast.LONG); navigation.navigate("HomeTabs")}, 2000);
+            try {
+                setLoading(true)
+               
+    
+                const response = await Axios.post(
+                    `http://localhost:5000/api/users/signup`,
+                    {
+                        "username": name,
+                        "email":email,
+                        "password" :password,
+                        "mobile":phoneNumber
+                    },
+                    {
+                        headers: {
+                            client_id: 'VL06122016',
+          
+                        },
+                    },
+                );
+                // console.log(response.data, "response=>>")
+                setLoading(true)
+                AsyncStorage.setItem('signUpData', JSON.stringify(response.data.signUpData));
+                navigation.navigate("HomeTabs")
+            } catch (err) {
+                console.log(err, "error on Purchase=>>")
+                setLoading(true)
+                Toast.show('Email or Password is wrong', Toast.LONG)
+            }
+            // setTimeout(function(){ Toast.show('Register Successfully', Toast.LONG); navigation.navigate("HomeTabs")}, 2000);
         
           
         } 

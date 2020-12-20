@@ -118,6 +118,9 @@ function Payment({ navigation }) {
                         <TouchableOpacity onPress={() => navigation.navigate('MorePlans')} >
                             <Text style={{ color: colors.primary, fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2) }} >Show more plans</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('HomeTabs')} >
+                            <Text style={{ color: colors.primary,fontWeight:"bold",fontSize:16,marginTop:10, fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2) }} >Dashboard</Text>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={{ width: '100%', marginTop: "7%", alignItems: 'center' }} >

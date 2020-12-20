@@ -1,13 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text,TouchableOpacity } from 'react-native';
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import colors from '../config/colors';
 
-function ListCard({screenWidth, picture, heading, subHeadding, hashTags, time, serve}) {
+function ListCard({screenWidth, picture, heading, subHeadding, hashTags, time, serve,navigation}) {
    return (
-       <View style={{width: screenWidth-20, height: screenWidth/3-15, flexDirection: 'row', marginTop: 20, borderWidth: 0.3, borderColor: colors.primary}} >
+
+  
+     
+       <TouchableOpacity onPress={()=>navigation.navigate("VideoPlay")} style={{width: screenWidth-20, height: screenWidth/3-15, flexDirection: 'row', marginTop: 20, borderWidth: 0.3, borderColor: colors.primary}} >
             <View>
                 <Image source={picture} style={{width: screenWidth/3-15, height: screenWidth/3-15}} />
             </View>
@@ -26,7 +29,8 @@ function ListCard({screenWidth, picture, heading, subHeadding, hashTags, time, s
                     </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
+
    );
 }
 
