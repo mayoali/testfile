@@ -72,9 +72,7 @@ function CreateRecipe(props) {
     async function getValue(){
         const UserData = await AsyncStorage.getItem('signInData');
         const UserDataAdmin =JSON.parse(UserData);
-        // console.log(UserData,"USER DATA+==> ha?")
       }
-
 
 
     const handleImage = async () => {
@@ -86,10 +84,11 @@ function CreateRecipe(props) {
         }
 
         let pickerResult = await ImagePicker.launchImageLibraryAsync({
-            quality: 0.8,
+            quality: 0.6,
             base64: true      
         });
         setBase64(pickerResult.base64)
+        Toast.show('Photo Selected', Toast.LONG);
         // console.log(pickerResult.base64);
 
     }
@@ -211,7 +210,7 @@ const nextBtn=()=>{
                             <View style={{ top: -10, width: "33%", borderBottomColor: "black", borderBottomWidth: 1, alignItems: 'center', justifyContent: 'flex-end' }} >
                                 <TextInput
                                   value={RestingTime}
-                               onChangeText={setRestingTime}
+                                onChangeText={setRestingTime}
                                 placeholderTextColor={colors.primary} placeholder="0 min" style={{ fontSize: RFPercentage(2.1), width: "50%" }} />
                             </View>
                         </View>

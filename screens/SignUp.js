@@ -9,6 +9,7 @@ import logo from "../assets/images/loginLogo.png";
 import colors from '../config/colors';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from 'axios';
 
 function SignUp({ navigation }) {
     const [name, setName] = useState("");
@@ -42,7 +43,7 @@ function SignUp({ navigation }) {
         }
 
 
-   async function Login(){
+   async function Signup(){
     console.log("Chalia kia?", name,"Email", email,"Pas",password,"ph",phoneNumber)
         if(!name){
             Toast.show('Please Enter Name', Toast.LONG);
@@ -76,15 +77,14 @@ function SignUp({ navigation }) {
                     },
                 );
                 // console.log(response.data, "response=>>")
-                setLoading(true)
+                setLoading(false)
                 AsyncStorage.setItem('signUpData', JSON.stringify(response.data.signUpData));
                 navigation.navigate("HomeTabs")
             } catch (err) {
                 console.log(err, "error on Purchase=>>")
-                setLoading(true)
+                setLoading(false)
                 Toast.show('Email or Password is wrong', Toast.LONG)
             }
-            // setTimeout(function(){ Toast.show('Register Successfully', Toast.LONG); navigation.navigate("HomeTabs")}, 2000);
         
           
         } 
@@ -112,20 +112,22 @@ function SignUp({ navigation }) {
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Name</Text>
                             <TextInput
                                value={name}
-                            onChange={(name)=>setName(name)}
+                               onChangeText={text => setName(text)}
+
+                           
                             style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Email</Text>
                             <TextInput
                                value={email}
-                            onChange={(email)=>setEmail(email)}
+                                onChangeText={text => setEmail(text)}
                             style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Password</Text>
                             <TextInput
-                             onChangeText={setPassword}
+                            onChangeText={text => setPassword(text)}
                              value={password}
                          
                             style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
@@ -134,7 +136,7 @@ function SignUp({ navigation }) {
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Phone Number</Text>
                             <TextInput
                                value={phoneNumber}
-                            onChange={setPhoneNumber}
+                                onChangeText={text => setPhoneNumber(text)}
                             style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "2%", flexDirection: 'row' }} >
@@ -147,7 +149,7 @@ function SignUp({ navigation }) {
                     </View>
 
                     <View>
-                        <TouchableOpacity onPress={() =>Login()} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: RFPercentage(5), marginBottom: RFPercentage(4) }} >
+                        <TouchableOpacity onPress={() =>Signup()} style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: RFPercentage(5), marginBottom: RFPercentage(4) }} >
                            {loading?
                            <View style={{padding:11}}>
                                <ActivityIndicator color={"#fff"}/>

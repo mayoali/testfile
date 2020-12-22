@@ -10,32 +10,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function CreateRecipe_3(props) {
     const [loading, setLoading] = useState(false);
     const [chefNote, setChefNote] = useState("");
-    const {
-        route: { params },
-    } = props;
-    // console.log(params,"PARAMS333Final==>>")
-    const Login=()=>{
-
-           
-                setLoading(true)
-                setTimeout(function(){ Toast.show('Recipe Post Successfully', Toast.LONG); props.navigation.navigate("AddIngrdient")}, 2700);
-            
-               
-            
-            }
+    const {route: { params }} = props;
+ 
 
             const Submit = async () => {
-                  
-       
                     setLoading(true)
                     try {
                       
                         const UserData = await AsyncStorage.getItem('signInData');
                         const userLoginData =JSON.parse(UserData);
                 
-                        // console.log(userLoginData._id,"userLoginData._id",userLoginData.token)
-                        // const asyncData = await AsyncStorage.getItem('userData'); 
-                        // const domain = `${store.getState().globalReducer.domain}`
                         const response = await Axios.post(`http://192.168.0.110:5000/api/recipe/insertrecipe`,
                             {
                                 "userId":userLoginData._id,
@@ -54,19 +38,6 @@ function CreateRecipe_3(props) {
                                 "difficulty":params.submitData1.params.Difficulty,
                                 // "dishImage":"baseparams64"
                                 "dishImage":params.submitData1.params.Base64
-                            // "userId":"5fd5f8d979fa06222098cdb9",
-                            // "name" :"Qofty",
-                            // "ingredients":[{"name":"Yogurts","Qty":"half Cup"},
-                            // {"name":"Salt","Qty":"2 table spoon"}],
-                            // "steps":[{"description":"Mix it well"},
-                            // {"description":"freez it"}],
-                            // "prepareTime":10,
-                            // "bakingTime":0,
-                            // "restingTime":0,
-                            // "fkDistypeId":"5fd5f8d979fa06222098cdb9",
-                            // "fkCusineTypeId":"5fd5f8d979fa06222098cdb9",
-                            // "difficulty":"Medium",
-                            // "dishImage":"base64"
                             },
                             {
                                 headers: {
@@ -80,7 +51,7 @@ function CreateRecipe_3(props) {
                         // props.navigation.navigate("AddIngrdient",{
                            ResData:response.data
                        })
-                        console.log(response.data, "response=>>")
+                        // console.log(response.data, "response=>>")
                         setLoading(false)
                     } catch (err) {
                         console.log(err,"ERR)R=>")
@@ -119,7 +90,6 @@ function CreateRecipe_3(props) {
                     <View style={{ width: '100%', height: '100%', left: "5%", marginTop: RFPercentage(50) }} >
                         <TouchableOpacity 
                         onPress={() => Submit()}
-                        // onPress={() => navigation.navigate('AddIngrdient')}
                         
                         style={{ backgroundColor: colors.primary, alignItems: 'center', marginTop: "13%" }} >
                            {loading?<View style={{padding:11}}><ActivityIndicator color={"#fff"}/></View>:

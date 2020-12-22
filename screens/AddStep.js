@@ -16,8 +16,9 @@ function AddStep(props) {
 
     const [result, setResult] = useState("");
     const [loading, setLoading] = useState(false);
+    const [description, setDescription] = useState("");
 
-
+ 
     const {
         route: { params },
     } = props;
@@ -25,22 +26,11 @@ function AddStep(props) {
 
     const handleImage = async () => {
         const result = await DocumentPicker.getDocumentAsync({});
-        console.log('result', result);
-        
-
-     
-  
-
+        // console.log('result', result);
 
         if (!result.cancelled) {
-
-   
-
         Toast.show('Photo or Video Selected', Toast.LONG);
-setResult(result)
-
-        
-         
+        setResult(result)    
 
         }
 
@@ -67,37 +57,37 @@ setResult(result)
     }
     const saveBtn = () => {
         setLoading(true)
-            setTimeout(function(){ Toast.show('Video Add Successfully', Toast.LONG); props.navigation.navigate("Payment")}, 5000);
+           
 
-        // const apiUrl = `http://192.168.0.110:5000/api/video/uploadvideo`;
-        // const { name, uri } = result;
-        // const uriParts = name.split('.');
-        // const fileType = uriParts[uriParts.length - 1];
-        // const formData = new FormData();
-        //    formData.append('document', {
-        //      uri,
-        //      name,
-        //      type: `application/${fileType}`,
-        //      fkRecipeId:params.recipeId
-        //    });
+        const apiUrl = `http://192.168.0.110:5000/api/video/uploadvideo`;
+        const { name, uri } = result;
+        const uriParts = name.split('.');
+        const fileType = uriParts[uriParts.length - 1];
+        const formData = new FormData();
+           formData.append('document', {
+             uri,
+             name,
+             type: `application/${fileType}`,
+             fkRecipeId:params.recipeId
+           });
 
-        //    const options = {
-        //      method: 'POST',
-        //      body: formData,
-        //      headers: {
-        //        Accept: 'application/json',
-        //        'Content-Type': 'multipart/form-data',
-        //     //    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmRmMGQ4NzQwNjk2YzM0M2YzMDQyOTAiLCJ1c2VybmFtZSI6InNhbXBsZWFzZGYiLCJpc1N1YmNyaWJlIjpmYWxzZSwiZW1haWwiOiJmYWl6YW5AZ21haWwuY29tIiwiaWF0IjoxNjA4NDc1MjM2LCJleHAiOjE2MDg0Nzg4MzZ9.ZD3E4ca35PKK670j_kef-K5MBcOqZldIzacC4CLMAxw"
+           const options = {
+             method: 'POST',
+             body: formData,
+             headers: {
+               Accept: 'application/json',
+               'Content-Type': 'multipart/form-data',
+            //    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmRmMGQ4NzQwNjk2YzM0M2YzMDQyOTAiLCJ1c2VybmFtZSI6InNhbXBsZWFzZGYiLCJpc1N1YmNyaWJlIjpmYWxzZSwiZW1haWwiOiJmYWl6YW5AZ21haWwuY29tIiwiaWF0IjoxNjA4NDc1MjM2LCJleHAiOjE2MDg0Nzg4MzZ9.ZD3E4ca35PKK670j_kef-K5MBcOqZldIzacC4CLMAxw"
 
-        //      },
-        //    };
+             },
+           };
 
-        //    return fetch(apiUrl, options).then(resp => resp.json()).then(data=> {
-        //     //    console.log(data,"DATA") 
-        //    Toast.show(data, Toast.LONG);
-        //    props.navigation.navigate('Payment')
-        //    setLoading(false)
-        // })
+           return fetch(apiUrl, options).then(resp => resp.json()).then(data=> {
+            //    console.log(data,"DATA") 
+           Toast.show(data, Toast.LONG);
+           props.navigation.navigate('Payment')
+           setLoading(false)
+        })
        
 
     }
@@ -130,7 +120,10 @@ setResult(result)
                     <View style={{ left: '5%', marginTop: "10%", width: "100%", flexDirection: 'column', flex: 1, alignItems: 'flex-start', justifyContent: 'flex-start' }} >
                         <View>
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(2.5) }} >Step Description</Text>
-                            <TextInput style={{ marginTop: 25, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
+                            <TextInput 
+                                value={description}
+                                onChangeText={text => setDescription(text)}
+                            style={{ marginTop: 25, fontSize: 20, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                     </View>
 
@@ -195,5 +188,5 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
 })
-
+// setTimeout(function(){ Toast.show('', Toast.LONG); ate("")}, 5000);
 export default AddStep;

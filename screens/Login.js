@@ -27,7 +27,7 @@ function Login({ navigation }) {
             try {
                 setLoading(true)
                 const sendObj = {
-                    "email": "faizan@gmail.com",
+                    "email": email,
                     "password": password
                 }
                 console.log("SEMFOBJ",sendObj)
@@ -84,14 +84,16 @@ function Login({ navigation }) {
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Email</Text>
                             <TextInput
                                 value={email}
-                                onChangeText={setEmail}
+                                onChangeText={text => setEmail(text)}
+                             
                                 style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <View style={{ marginTop: "7%" }} >
                             <Text style={{ fontFamily: 'AvianoFlareRegular', fontSize: RFPercentage(1.8) }} >Password</Text>
                             <TextInput
                                 value={password}
-                                onChangeText={setPassword}
+                                onChangeText={text => setPassword(text)}
+                    
                                 style={{ fontSize: 17, minWidth: "100%", borderBottomColor: "black", borderBottomWidth: 1 }} />
                         </View>
                         <TouchableOpacity style={{ marginTop: "2%" }} >
